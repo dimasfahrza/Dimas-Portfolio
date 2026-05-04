@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dimas Ahmad Fahreza — Engineer & ML Developer</title>
+  <meta name="description" content="Software engineer and ML developer studying at ITS Surabaya and Asia University Taiwan. I build trading systems, ML pipelines, and software that ships." />
+
+  <!-- Prevent dark-mode flash -->
+  <script>
+    (function(){
+      var t=localStorage.getItem('theme'),d=window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if(t==='dark'||(t!=='light'&&d))document.documentElement.classList.add('dark');
+    })();
+  </script>
+
+  <!-- Tailwind config (must precede CDN) -->
+  <script>tailwind={config:{darkMode:'class',theme:{extend:{}}}}</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Inter typeface -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome (tech-badge icons only — social icons are inline SVG) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       BASE
+    ═══════════════════════════════════════ */
+    *, ::before, ::after { font-family: 'Inter', system-ui, sans-serif; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+
+    /* ═══════════════════════════════════════
+       GRADIENT TEXT
+    ═══════════════════════════════════════ */
+    .g-text {
+      background: linear-gradient(120deg, #818cf8 0%, #a78bfa 55%, #c084fc 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ═══════════════════════════════════════
+       HERO BACKGROUND
+       — asymmetric glow, NOT centered
+    ═══════════════════════════════════════ */
+    .hero-bg {
+      background-color: #07070e;
+      background-image:
+        radial-gradient(ellipse 70% 55% at 75% 15%,  rgba(99,102,241,0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 15% 85%,  rgba(139,92,246,0.08) 0%, transparent 55%);
+    }
+    /* Fine line-grid for technical feel */
+    .line-grid {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION BACKGROUNDS
+    ═══════════════════════════════════════ */
+    .s-dark  { background-color: #07070e; }
+    .s-mid   { background-color: #0b0b18; }
+    html:not(.dark) .s-dark { background-color: #ffffff; }
+    html:not(.dark) .s-mid  { background-color: #f5f5fb; }
+
+    /* ═══════════════════════════════════════
+       FLOATING ORBS
+    ═══════════════════════════════════════ */
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none;
+      animation: drift 14s ease-in-out infinite;
+    }
+    @keyframes drift {
+      0%,100% { transform: translate(0,0) scale(1); }
+      40%      { transform: translate(12px,-16px) scale(1.05); }
+      75%      { transform: translate(-8px,10px) scale(0.97); }
+    }
+
+    /* ═══════════════════════════════════════
+       PROFILE IMAGE — editorial rectangle
+    ═══════════════════════════════════════ */
+    .profile-img {
+      border-radius: 18px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.07),
+        0 24px 60px rgba(0,0,0,0.55),
+        0 0 80px rgba(99,102,241,0.12);
+    }
+
+    /* ═══════════════════════════════════════
+       NAV GLASS
+    ═══════════════════════════════════════ */
+    .glass-nav {
+      background: rgba(7,7,14,0.82);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    html:not(.dark) .glass-nav {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .nav-link.on { color: #818cf8; }
+
+    /* ═══════════════════════════════════════
+       HAMBURGER
+    ═══════════════════════════════════════ */
+    .hb span { transition: all .25s ease; display: block; }
+    .hb.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hb.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hb.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════ */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .62s ease, transform .62s ease; }
+    .reveal.up { opacity: 1; transform: translateY(0); }
+    .d1{transition-delay:.07s} .d2{transition-delay:.14s}
+    .d3{transition-delay:.21s} .d4{transition-delay:.28s}
+    .d5{transition-delay:.35s}
+
+    /* ═══════════════════════════════════════
+       CARDS
+       — minimal surface, intentional border
+    ═══════════════════════════════════════ */
+    .card {
+      background: rgba(255,255,255,0.026);
+      border: 1px solid rgba(255,255,255,0.068);
+      transition: border-color .24s ease, box-shadow .24s ease, transform .24s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    html:not(.dark) .card {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(0,0,0,0.07);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    /* Project card hover variants */
+    .card-i:hover { transform: translateY(-5px); border-color: rgba(99,102,241,0.32);  box-shadow: 0 20px 50px -8px rgba(99,102,241,0.22); }
+    .card-a:hover { transform: translateY(-5px); border-color: rgba(245,158,11,0.28);  box-shadow: 0 20px 50px -8px rgba(245,158,11,0.18); }
+    .card-e:hover { transform: translateY(-5px); border-color: rgba(16,185,129,0.28);  box-shadow: 0 20px 50px -8px rgba(16,185,129,0.18); }
+    .card-c:hover { transform: translateY(-5px); border-color: rgba(6,182,212,0.28);   box-shadow: 0 20px 50px -8px rgba(6,182,212,0.18); }
+
+    /* ═══════════════════════════════════════
+       FEATURED PROJECT CARD
+       — horizontal, elevated, cinematic
+    ═══════════════════════════════════════ */
+    .featured {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(99,102,241,0.2);
+      transition: border-color .3s ease, box-shadow .3s ease;
+    }
+    html:not(.dark) .featured {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(99,102,241,0.15);
+    }
+    .featured:hover { border-color: rgba(99,102,241,0.4); box-shadow: 0 28px 70px -12px rgba(99,102,241,0.3); }
+
+    /* ═══════════════════════════════════════
+       STATUS BADGES
+    ═══════════════════════════════════════ */
+    .sbadge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 6px; border: 1px solid;
+    }
+    .sb-prod   { background:rgba(16,185,129,.09); color:#34d399; border-color:rgba(16,185,129,.22); }
+    .sb-active { background:rgba(99,102,241,.09); color:#818cf8; border-color:rgba(99,102,241,.22); }
+    .sb-open   { background:rgba(139,92,246,.09); color:#c084fc; border-color:rgba(139,92,246,.22); }
+    .sb-edtech { background:rgba(6,182,212,.09);  color:#22d3ee; border-color:rgba(6,182,212,.22); }
+
+    /* ═══════════════════════════════════════
+       TECH BADGES
+    ═══════════════════════════════════════ */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px;
+      font-size: .71rem; font-weight: 600;
+      border-radius: 7px; border: 1px solid;
+      transition: transform .18s ease;
+      cursor: default;
+    }
+    .badge:hover { transform: scale(1.06); }
+
+    /* ═══════════════════════════════════════
+       SKILL TAGS
+       — clean chips, no progress bars
+    ═══════════════════════════════════════ */
+    .stag {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 14px;
+      font-size: .8rem; font-weight: 500; color: #94a3b8;
+      background: rgba(255,255,255,0.032);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 9px;
+      transition: all .18s ease;
+      cursor: default;
+    }
+    html:not(.dark) .stag {
+      color: #475569; background: #f1f5f9; border-color: #e2e8f0;
+    }
+    .stag:hover {
+      color: #c7d2fe; border-color: rgba(99,102,241,0.32);
+      background: rgba(99,102,241,0.07);
+    }
+    html:not(.dark) .stag:hover {
+      color: #4f46e5; border-color: rgba(99,102,241,0.35);
+      background: rgba(99,102,241,0.06);
+    }
+    .stag-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ═══════════════════════════════════════
+       TIMELINE
+    ═══════════════════════════════════════ */
+    .tl::before {
+      content: ''; position: absolute; left: 21px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, #6366f1 0%, #a855f7 60%, transparent 100%);
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION DIVIDER
+    ═══════════════════════════════════════ */
+    .s-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.18) 35%, rgba(99,102,241,0.18) 65%, transparent);
+    }
+
+    /* ═══════════════════════════════════════
+       HERO STAT ROW
+    ═══════════════════════════════════════ */
+    .hstat { display: flex; flex-direction: column; gap: 2px; padding: 0 24px; border-right: 1px solid rgba(255,255,255,0.06); }
+    .hstat:last-child { border-right: none; }
+    .hstat-val   { font-size: 1.4rem; font-weight: 800; color: #f1f5f9; line-height: 1.1; }
+    .hstat-label { font-size: .7rem; font-weight: 500; color: #475569; letter-spacing: .05em; text-transform: uppercase; }
+    html:not(.dark) .hstat-val   { color: #0f172a; }
+    html:not(.dark) .hstat-label { color: #64748b; }
+    html:not(.dark) .hstat       { border-color: rgba(0,0,0,0.07); }
+
+    /* ═══════════════════════════════════════
+       SOCIAL ICON SYSTEM (preserved)
+    ═══════════════════════════════════════ */
+    .si {
+      position: relative; display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); color: #64748b;
+      transition: color .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease, transform .22s cubic-bezier(.4,0,.2,1);
+    }
+    html:not(.dark) .si { background: #f1f5f9; border-color: #e2e8f0; color: #64748b; }
+    .si svg { flex-shrink: 0; display: block; }
+    .si[data-tip]::after {
+      content: attr(data-tip); position: absolute; bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: rgba(5,5,12,.96); color: #e2e8f0; font-size: 11px; font-weight: 600; white-space: nowrap;
+      padding: 4px 10px; border-radius: 7px; pointer-events: none; opacity: 0; z-index: 100;
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .si[data-tip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .si-gh:hover { color:#fff; background:#24292f; border-color:#545d68; transform:translateY(-3px) scale(1.08); box-shadow:0 8px 24px rgba(0,0,0,.55); }
+    .si-li:hover { color:#fff; background:#0A66C2; border-color:#0A66C2; transform:translateY(-3px) scale(1.08); box-shadow:0 8px 24px rgba(10,102,194,.55); }
+    .si-em:hover { color:#fff; background:#EA4335; border-color:#EA4335; transform:translateY(-3px) scale(1.08); box-shadow:0 8px 24px rgba(234,67,53,.5); }
+    .si-ig:hover { color:#fff; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border-color:#dc2743; transform:translateY(-3px) scale(1.08); box-shadow:0 8px 24px rgba(220,39,67,.45); }
+    .si-lg { flex-direction: column; gap: 9px; padding: 18px 22px; border-radius: 18px; min-width: 84px; }
+    .si-lg .si-label { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; line-height: 1; }
+    .si-lg[data-tip]::after { display: none; }
+    .si-lg:hover { transform: translateY(-4px) scale(1.04) !important; }
+
+    /* ═══════════════════════════════════════
+       DOMAIN CARD (About section)
+    ═══════════════════════════════════════ */
+    .domain-card {
+      border-left: 2px solid rgba(99,102,241,0.25);
+      padding-left: 16px;
+      transition: border-color .2s ease;
+    }
+    .domain-card:hover { border-color: rgba(99,102,241,0.7); }
+
+    /* ═══════════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 99px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+
+    /* ═══════════════════════════════════════
+       MISC
+    ═══════════════════════════════════════ */
+    .no-sel { user-select: none; }
+
+    /* Impact metric chip */
+    .metric {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 8px;
+      font-size: .72rem; font-weight: 600;
+      background: rgba(99,102,241,0.08); color: #a5b4fc;
+      border: 1px solid rgba(99,102,241,0.15);
+    }
+    html:not(.dark) .metric { background: rgba(99,102,241,0.06); color: #4f46e5; border-color: rgba(99,102,241,0.18); }
+
+    /* ═══════════════════════════════════════
+       LIGHT MODE OVERRIDES
+       — fix all dark-only styles for white bg
+    ═══════════════════════════════════════ */
+    /* Grid lines visible on white background */
+    html:not(.dark) .line-grid {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.045) 1px, transparent 1px);
+    }
+    /* Status badge colors — darken for white bg contrast */
+    .sb-grad  { background:rgba(71,85,105,.08); color:#94a3b8; border-color:rgba(71,85,105,.18); }
+    html:not(.dark) .sb-grad  { background:rgba(71,85,105,.07); color:#64748b; border-color:rgba(71,85,105,.28); }
+    html:not(.dark) .sb-prod   { background:rgba(16,185,129,.1); color:#059669; border-color:rgba(16,185,129,.3); }
+    html:not(.dark) .sb-active { background:rgba(99,102,241,.1); color:#4f46e5; border-color:rgba(99,102,241,.3); }
+    html:not(.dark) .sb-open   { background:rgba(139,92,246,.1); color:#7c3aed; border-color:rgba(139,92,246,.3); }
+    html:not(.dark) .sb-edtech { background:rgba(6,182,212,.1);  color:#0891b2; border-color:rgba(6,182,212,.3); }
+    /* Active nav link on white */
+    html:not(.dark) .nav-link.on { color: #4f46e5; }
+    /* Domain card left border on white */
+    html:not(.dark) .domain-card { border-color: rgba(99,102,241,0.3); }
+    html:not(.dark) .domain-card:hover { border-color: rgba(99,102,241,0.75); }
+    /* Social icon tooltip on white */
+    html:not(.dark) .si[data-tip]::after {
+      background: rgba(15,23,42,.95); color: #f1f5f9;
+      border-color: rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-[#07070e] text-gray-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden">
+
+
+<!-- ═══════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════ -->
+<header id="navbar" class="fixed top-0 inset-x-0 z-50 px-4 transition-all duration-300" style="padding-top:12px">
+  <div class="max-w-6xl mx-auto">
+    <div class="glass-nav rounded-2xl px-5 py-3 flex items-center justify-between shadow-lg">
+
+      <a href="#hero" class="text-base font-black g-text tracking-tight select-none">DAF.</a>
+
+      <nav class="hidden md:flex items-center gap-7">
+        <a href="#about"    class="nav-link text-sm font-medium text-gray-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">About</a>
+        <a href="#projects" class="nav-link text-sm font-medium text-gray-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Projects</a>
+        <a href="#skills"   class="nav-link text-sm font-medium text-gray-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Stack</a>
+        <a href="#contact"  class="nav-link text-sm font-medium text-gray-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-1.5">
+        <button id="themeBtn" aria-label="Toggle dark mode"
+          class="w-9 h-9 rounded-xl flex items-center justify-center text-gray-500 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+          <i class="fa-solid fa-sun text-sm hidden dark:block"></i>
+          <i class="fa-solid fa-moon text-sm dark:hidden"></i>
+        </button>
+        <button id="hbBtn" aria-label="Toggle menu"
+          class="hb md:hidden w-9 h-9 rounded-xl flex flex-col items-center justify-center gap-[5px] hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+          <span class="h-px w-[18px] bg-gray-700 dark:bg-slate-200 rounded-full"></span>
+          <span class="h-px w-[18px] bg-gray-700 dark:bg-slate-200 rounded-full"></span>
+          <span class="h-px w-[18px] bg-gray-700 dark:bg-slate-200 rounded-full"></span>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobMenu" class="hidden md:hidden mt-2 overflow-hidden" style="max-height:0;transition:max-height .3s ease">
+      <div class="glass-nav rounded-2xl px-6 py-5 flex flex-col gap-4 shadow-xl">
+        <a href="#about"    class="mob-link text-sm font-semibold text-gray-700 dark:text-slate-200 hover:text-indigo-500 transition-colors py-0.5">About</a>
+        <a href="#projects" class="mob-link text-sm font-semibold text-gray-700 dark:text-slate-200 hover:text-indigo-500 transition-colors py-0.5">Projects</a>
+        <a href="#skills"   class="mob-link text-sm font-semibold text-gray-700 dark:text-slate-200 hover:text-indigo-500 transition-colors py-0.5">Stack</a>
+        <a href="#contact"  class="mob-link text-sm font-semibold text-gray-700 dark:text-slate-200 hover:text-indigo-500 transition-colors py-0.5">Contact</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════
+     HERO  — asymmetric two-column split
+═══════════════════════════════════════════════════ -->
+<section id="hero" class="hero-bg s-dark relative min-h-screen flex items-center overflow-hidden">
+  <div class="line-grid absolute inset-0 no-sel pointer-events-none"></div>
+
+  <!-- Orbs — asymmetric placement -->
+  <div class="orb w-[480px] h-[480px] bg-indigo-700 opacity-[0.14] -top-20 right-10"   style="animation-delay:0s"></div>
+  <div class="orb w-[320px] h-[320px] bg-violet-700 opacity-[0.10] bottom-10 left-1/4"  style="animation-delay:5s"></div>
+
+  <div class="relative z-10 w-full max-w-6xl mx-auto px-6 pt-28 pb-16 lg:pb-20">
+
+    <!-- ── Two-column grid ── -->
+    <div class="grid lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px] gap-12 lg:gap-16 items-center">
+
+      <!-- LEFT: text content -->
+      <div class="order-2 lg:order-1">
+
+        <!-- Availability chip -->
+        <div class="reveal mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/25 bg-indigo-50 dark:bg-indigo-500/08 text-xs font-semibold text-indigo-600 dark:text-indigo-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+          Open to AI / Web3 roles &amp; research
+        </div>
+
+        <!-- Name — large display type -->
+        <h1 class="reveal d1 font-black leading-[1.0] tracking-tight text-gray-900 dark:text-white mb-5"
+            style="font-size: clamp(2.8rem, 6.5vw, 5.5rem)">
+          Dimas Ahmad<br>
+          <span class="g-text">Fahreza.</span>
+        </h1>
+
+        <!-- Personal statement — specific, not generic -->
+        <p class="reveal d2 text-gray-600 dark:text-slate-400 leading-[1.75] mb-8 max-w-lg"
+           style="font-size: clamp(1rem, 1.4vw, 1.125rem)">
+          I engineer <strong class="text-gray-900 dark:text-slate-200 font-semibold">AI systems that act autonomously</strong>
+          and <strong class="text-gray-900 dark:text-slate-200 font-semibold">Web3 infrastructure that runs at market speed</strong> —
+          from algorithmic trading engines processing live on-chain signals
+          to ML pipelines that decide and execute without human intervention.
+          Currently at <span class="text-indigo-600 dark:text-indigo-400 font-semibold">ITS Surabaya</span>
+          and <span class="text-violet-600 dark:text-violet-400 font-semibold">Asia University Taiwan</span>.
+        </p>
+
+        <!-- CTAs -->
+        <div class="reveal d3 flex flex-wrap gap-3 mb-10">
+          <a href="#projects"
+             class="group inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold rounded-xl shadow-lg shadow-indigo-600/25 hover:shadow-indigo-500/35 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+            See My Projects
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-y-0.5 transition-transform" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </a>
+          <a href="#contact"
+             class="inline-flex items-center gap-2 px-6 py-3 text-sm font-bold text-gray-700 dark:text-slate-300 rounded-xl border border-gray-200 dark:border-white/10 hover:border-indigo-500/40 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/05 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+            Get In Touch
+          </a>
+        </div>
+
+        <!-- Social quick-links -->
+        <div class="reveal d4 flex items-center gap-2.5">
+          <a href="https://github.com/dimasfahrza" target="_blank" rel="noopener"
+             aria-label="GitHub" data-tip="GitHub" class="si si-gh w-10 h-10 rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/dimasahmadfahreza" target="_blank" rel="noopener"
+             aria-label="LinkedIn" data-tip="LinkedIn" class="si si-li w-10 h-10 rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="mailto:dimas.afahreza@gmail.com" aria-label="Email" data-tip="Email" class="si si-em w-10 h-10 rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/></svg>
+          </a>
+        </div>
+      </div><!-- end left col -->
+
+      <!-- RIGHT: profile image — editorial, not circular -->
+      <div class="order-1 lg:order-2 reveal d2 flex justify-center lg:justify-end">
+        <div class="relative">
+          <!-- Glow behind image -->
+          <div class="absolute -inset-4 rounded-2xl bg-indigo-600/10 blur-2xl pointer-events-none no-sel"></div>
+          <!-- Profile image -->
+          <img
+            src="profile.png"
+            alt="Dimas Ahmad Fahreza"
+            class="profile-img relative w-64 h-64 sm:w-80 sm:h-80 lg:w-full lg:h-auto object-cover object-top max-w-sm"
+            loading="eager"
+          />
+          <!-- Floating chip: current status -->
+          <div class="absolute -bottom-4 -left-4 flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-[#0f0f20] border border-indigo-500/20 shadow-xl shadow-black/30 text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0A50.009 50.009 0 007.5 12.174v-.224c0-.131.067-.248.172-.311a54.614 54.614 0 014.653-2.52.75.75 0 00-.65-1.352 56.129 56.129 0 00-4.78 2.589 1.858 1.858 0 00-.859 1.228 49.803 49.803 0 00-4.634-1.527.75.75 0 01-.231-1.337A60.653 60.653 0 0111.7 2.805z"/><path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016 13.18v1.27a1.5 1.5 0 00-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.661a6.729 6.729 0 00.551-1.608 1.5 1.5 0 00.14-2.67v-.645a48.549 48.549 0 013.44 1.668 2.25 2.25 0 002.12 0z"/></svg>
+            ITS · Asia University Taiwan
+          </div>
+        </div>
+      </div><!-- end right col -->
+
+    </div><!-- end grid -->
+
+    <!-- ── Stats bar ── -->
+    <div class="reveal d5 mt-16 pt-8 border-t border-gray-100 dark:border-white/[0.06] flex flex-wrap gap-y-4">
+      <div class="hstat pl-0 border-l-0">
+        <div class="hstat-val">4</div>
+        <div class="hstat-label">Shipped Projects</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">2</div>
+        <div class="hstat-label">Universities</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">2022–</div>
+        <div class="hstat-label">Actively Building</div>
+      </div>
+      <div class="hstat hidden sm:flex">
+        <div class="hstat-val">ID ↔ TW</div>
+        <div class="hstat-label">Surabaya &amp; Taipei</div>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-slate-600 animate-bounce no-sel">
+      <span class="text-[9px] tracking-[.2em] uppercase font-medium">scroll</span>
+      <i class="fa-solid fa-chevron-down text-[9px]"></i>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     ABOUT  — editorial layout, not two identical cards
+═══════════════════════════════════════════════════ -->
+<section id="about" class="s-mid py-24 sm:py-32 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Section label — left-aligned -->
+    <div class="reveal mb-12">
+      <p class="text-[11px] font-bold tracking-[.22em] uppercase text-indigo-600 dark:text-indigo-400 mb-3">Background</p>
+      <h2 class="text-3xl sm:text-4xl font-black leading-tight text-gray-900 dark:text-white max-w-xl">
+        Engineering at the frontier<br>of <span class="g-text">AI and Web3.</span>
+      </h2>
+    </div>
+
+    <!-- ── Editorial two-column ── -->
+    <div class="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-start">
+
+      <!-- Left: bio + chips -->
+      <div class="reveal">
+        <p class="text-gray-600 dark:text-slate-400 leading-[1.85] mb-6" style="font-size:.95rem">
+          I'm a final-year Informatics student at
+          <strong class="text-gray-900 dark:text-white font-semibold">Institut Teknologi Sepuluh Nopember (ITS)</strong>,
+          pursuing a double-degree at
+          <strong class="text-gray-900 dark:text-white font-semibold">Asia University Taiwan</strong>.
+          My focus is AI Engineering — building systems that learn, decide, and act in production —
+          and Web3, where decentralized infrastructure is redefining how financial systems operate at machine scale.
+        </p>
+        <p class="text-gray-600 dark:text-slate-400 leading-[1.85] mb-8" style="font-size:.95rem">
+          My recent work includes an autonomous SMC trading system processing live Binance
+          market data across 5 crypto pairs with real-time signal scoring and zero-latency
+          order execution — and a Supabase-backed PWA running on real hardware in Taiwan.
+          I build systems that operate independently in production, not just in demos.
+        </p>
+
+        <!-- Status chips -->
+        <div class="flex flex-wrap gap-2">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-500/20">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            AI / Web3 roles open
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-100 dark:border-violet-500/20">
+            Research &amp; internship
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20">
+            Remote-friendly
+          </span>
+        </div>
+      </div>
+
+      <!-- Right: domain list — editorial style, not bullet list -->
+      <div class="reveal d1 space-y-6">
+
+        <div class="domain-card">
+          <p class="text-[11px] font-bold tracking-[.15em] uppercase text-slate-500 dark:text-slate-500 mb-1">AI Engineering &amp; ML Systems</p>
+          <p class="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">Production-grade AI — neural networks, NLP models, and autonomous decision engines trained on real-world market and behavioral data, not toy datasets.</p>
+        </div>
+
+        <div class="domain-card">
+          <p class="text-[11px] font-bold tracking-[.15em] uppercase text-slate-500 dark:text-slate-500 mb-1">Web3 &amp; DeFi Infrastructure</p>
+          <p class="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">Algorithmic engines running on live on-chain signals — SMC pattern recognition, automated position management, and crypto infrastructure that operates 24/7 without intervention.</p>
+        </div>
+
+        <div class="domain-card">
+          <p class="text-[11px] font-bold tracking-[.15em] uppercase text-slate-500 dark:text-slate-500 mb-1">Full-Stack &amp; Real-Time Systems</p>
+          <p class="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">React + FastAPI backends and Supabase-powered PWAs — offline-first, installable, real-time sync. From trading dashboards to field operations tools deployed on actual hardware.</p>
+        </div>
+
+        <div class="domain-card">
+          <p class="text-[11px] font-bold tracking-[.15em] uppercase text-slate-500 dark:text-slate-500 mb-1">Autonomous Agents &amp; Pipelines</p>
+          <p class="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">AI-powered Telegram bots and automation pipelines that eliminate human bottlenecks — live crypto signal delivery, scheduled data processing, and self-managing position lifecycle.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="s-divider mt-20"></div>
+
+    <!-- ── Education timeline — different layout from the bio above ── -->
+    <div class="reveal mt-16">
+      <p class="text-[11px] font-bold tracking-[.22em] uppercase text-indigo-600 dark:text-indigo-400 mb-10">Education</p>
+
+      <div class="relative tl pl-14 space-y-7">
+
+        <!-- ITS -->
+        <div class="reveal relative card rounded-2xl p-6">
+          <div class="absolute -left-14 w-11 h-11 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+            <i class="fa-solid fa-graduation-cap text-white text-sm"></i>
+          </div>
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+            <div>
+              <h4 class="font-bold text-gray-900 dark:text-white">Institut Teknologi Sepuluh Nopember (ITS)</h4>
+              <p class="text-indigo-600 dark:text-indigo-400 text-sm font-semibold mt-0.5">Bachelor of Informatics · Surabaya, Indonesia</p>
+            </div>
+            <span class="sbadge sb-active self-start flex-shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>2022 – 2026
+            </span>
+          </div>
+          <p class="text-gray-500 dark:text-slate-400 text-sm leading-relaxed">Algorithms, data structures, machine learning, software engineering, and system design at Indonesia's premier technical university.</p>
+          <div class="flex flex-wrap gap-1.5 mt-3">
+            <span class="badge bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border-indigo-100 dark:border-indigo-500/20">Algorithms</span>
+            <span class="badge bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border-indigo-100 dark:border-indigo-500/20">Machine Learning</span>
+            <span class="badge bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border-indigo-100 dark:border-indigo-500/20">Software Engineering</span>
+          </div>
+        </div>
+
+        <!-- Asia University Taiwan -->
+        <div class="reveal d1 relative card rounded-2xl p-6">
+          <div class="absolute -left-14 w-11 h-11 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/25">
+            <i class="fa-solid fa-earth-asia text-white text-sm"></i>
+          </div>
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+            <div>
+              <h4 class="font-bold text-gray-900 dark:text-white">Asia University Taiwan</h4>
+              <p class="text-cyan-600 dark:text-cyan-400 text-sm font-semibold mt-0.5">Department of Computer Science &amp; Information Engineering · Taichung, Taiwan</p>
+            </div>
+            <div class="flex flex-col items-start sm:items-end gap-1.5 flex-shrink-0">
+              <span class="sbadge sb-active self-start">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>2024 – 2026
+              </span>
+              <span class="sbadge sb-open">Double Degree</span>
+            </div>
+          </div>
+          <p class="text-gray-500 dark:text-slate-400 text-sm leading-relaxed">International double-degree program strengthening expertise in computer science and AI within a cross-cultural engineering environment.</p>
+          <div class="flex flex-wrap gap-1.5 mt-3">
+            <span class="badge bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-100 dark:border-cyan-500/20">Computer Science</span>
+            <span class="badge bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-100 dark:border-cyan-500/20">Artificial Intelligence</span>
+            <span class="badge bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-100 dark:border-cyan-500/20">International Program</span>
+          </div>
+        </div>
+
+        <!-- High School -->
+        <div class="reveal d2 relative opacity-60">
+          <div class="absolute -left-14 w-11 h-11 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+            <i class="fa-solid fa-school text-gray-500 dark:text-white text-sm"></i>
+          </div>
+          <div class="card rounded-2xl p-6">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+              <div>
+                <h4 class="font-bold text-gray-700 dark:text-slate-300">Thursina IIBS Malang</h4>
+                <p class="text-gray-500 text-sm font-medium mt-0.5">Senior High School · Science (IPA) · Malang, Indonesia</p>
+              </div>
+              <span class="sbadge sb-grad self-start">Graduated</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PROJECTS  — featured card + smaller grid
+     Different layout breaks the template feel
+═══════════════════════════════════════════════════ -->
+<section id="projects" class="s-dark py-24 sm:py-32 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Heading — left-aligned, no centered label pattern -->
+    <div class="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+      <div>
+        <p class="text-[11px] font-bold tracking-[.22em] uppercase text-indigo-600 dark:text-indigo-400 mb-3">What I've shipped</p>
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white leading-tight">Real Projects.<br>Real Impact.</h2>
+      </div>
+      <p class="text-sm text-gray-500 dark:text-slate-500 max-w-xs leading-relaxed">Four production-grade projects — each solving a real problem, not a tutorial exercise.</p>
+    </div>
+
+    <!-- ══ FEATURED PROJECT ════════════════════════════ -->
+    <!-- Horizontal card — visually distinct from the grid below -->
+    <div class="reveal featured rounded-2xl overflow-hidden mb-6">
+      <div class="flex flex-col md:flex-row">
+
+        <!-- Left: visual banner (portrait proportion on mobile, landscape sidebar on desktop) -->
+        <div class="relative md:w-64 lg:w-72 xl:w-80 flex-shrink-0 bg-gradient-to-br from-indigo-600 via-violet-700 to-purple-800 flex flex-col justify-between p-6 min-h-[200px] md:min-h-0">
+          <div class="absolute inset-0 opacity-[0.06]"
+               style="background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(255,255,255,.5) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(255,255,255,.5) 29px)"></div>
+
+          <!-- Icons cluster -->
+          <div class="relative z-10 flex gap-3 opacity-50">
+            <i class="fa-solid fa-chart-candlestick text-white text-3xl"></i>
+            <i class="fa-brands fa-react text-white text-3xl"></i>
+            <i class="fa-brands fa-python text-white text-3xl"></i>
+          </div>
+
+          <!-- Status + label -->
+          <div class="relative z-10 space-y-2">
+            <span class="sbadge sb-prod">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Production-ready
+            </span>
+            <div>
+              <p class="text-white/40 text-[10px] font-bold tracking-[.15em] uppercase">Featured Project</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: content -->
+        <div class="p-7 flex flex-col justify-between flex-1">
+          <div>
+            <!-- Title + meta -->
+            <div class="flex flex-wrap items-start gap-3 mb-3">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white">SMC Trading Dashboard</h3>
+              <span class="badge bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-500/20 self-start mt-0.5">React + FastAPI</span>
+            </div>
+
+            <!-- Impact statement — one strong sentence -->
+            <p class="text-indigo-600 dark:text-indigo-400 font-semibold mb-3" style="font-size:.9rem">
+              "Autonomous AI trading system — SMC signal scoring, live OB/BOS/FVG detection, and zero-latency order execution across 5 crypto pairs on Binance Futures."
+            </p>
+
+            <!-- Metrics -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="metric"><i class="fa-solid fa-bolt text-[10px]"></i> WebSocket latency &lt;100ms</span>
+              <span class="metric"><i class="fa-solid fa-chart-line text-[10px]"></i> 5 pairs monitored</span>
+              <span class="metric"><i class="fa-solid fa-robot text-[10px]"></i> Full algo-trading engine</span>
+            </div>
+
+            <!-- Description -->
+            <p class="text-gray-500 dark:text-slate-400 text-sm leading-relaxed mb-5">
+              Full-stack AI trading platform implementing Smart Money Concepts. Live candlestick charts with OB/BOS/FVG zones, real-time Binance WebSocket order book, ML-scored signal engine, economic calendar scraper, trade journal, and P&amp;L analytics — all wired to an autonomous Telegram bot that opens, manages, and closes positions without human input.
+            </p>
+
+            <!-- Tech stack -->
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="badge bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-100 dark:border-cyan-500/20"><i class="fa-brands fa-react text-[10px]"></i> React 18</span>
+              <span class="badge bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300 border-green-100 dark:border-green-500/20"><i class="fa-solid fa-bolt text-[10px]"></i> FastAPI</span>
+              <span class="badge bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-500/20"><i class="fa-solid fa-database text-[10px]"></i> PostgreSQL</span>
+              <span class="badge bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-100 dark:border-sky-500/20"><i class="fa-brands fa-docker text-[10px]"></i> Docker</span>
+              <span class="badge bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-300 border-orange-100 dark:border-orange-500/20"><i class="fa-solid fa-plug text-[10px]"></i> WebSocket</span>
+              <span class="badge bg-purple-50 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-100 dark:border-purple-500/20"><i class="fa-brands fa-python text-[10px]"></i> Python</span>
+            </div>
+          </div>
+
+          <!-- Link -->
+          <a href="https://github.com/dimasfahrza/SMC-Dashboard" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold rounded-xl hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 self-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+
+      </div>
+    </div>
+    <!-- ══ END FEATURED ══════════════════════════════ -->
+
+    <!-- Regular project grid — 3 cards, different visual weight from featured -->
+    <div class="grid md:grid-cols-3 gap-4">
+
+      <!-- SMC Bot Telegram -->
+      <div class="reveal card card-a rounded-2xl flex flex-col overflow-hidden">
+        <!-- Thin accent bar instead of full banner — cleaner -->
+        <div class="h-1 bg-gradient-to-r from-amber-500 to-orange-600 flex-shrink-0"></div>
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between mb-3">
+            <span class="sbadge sb-active">Active</span>
+            <i class="fa-brands fa-telegram text-orange-400/40 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-base mb-2 text-gray-900 dark:text-white">SMC Bot Telegram</h3>
+          <p class="text-amber-600 dark:text-amber-400/80 text-xs font-semibold mb-2">"AI signal engine — autonomous SMC pattern recognition with zero-latency execution on Binance Futures."</p>
+          <p class="text-gray-500 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-4">
+            Autonomous trading agent scanning BTC, ETH, SOL, BNB &amp; XRP hourly via SMC analysis (OB, BOS, FVG scoring). Self-manages position lifecycle — dynamic leverage, loss-streak circuit breakers, automatic breakeven — with no human in the loop.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="badge bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-500/20"><i class="fa-brands fa-python text-[10px]"></i> Python</span>
+            <span class="badge bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-100 dark:border-sky-500/20"><i class="fa-brands fa-telegram text-[10px]"></i> python-telegram-bot</span>
+            <span class="badge bg-yellow-50 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-300 border-yellow-100 dark:border-yellow-500/20">ccxt</span>
+          </div>
+          <a href="https://github.com/dimasfahrza/SMC-Bot-Telegram" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold rounded-xl hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 mt-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- RoomFlow -->
+      <div class="reveal d1 card card-e rounded-2xl flex flex-col overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-emerald-500 to-teal-600 flex-shrink-0"></div>
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between mb-3">
+            <span class="sbadge sb-open">Open Source</span>
+            <i class="fa-solid fa-hotel text-emerald-400/40 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-base mb-2 text-gray-900 dark:text-white">RoomFlow</h3>
+          <p class="text-emerald-600 dark:text-emerald-400/80 text-xs font-semibold mb-2">"Production PWA deployed to real staff — real-time sync across devices, zero infrastructure cost."</p>
+          <p class="text-gray-500 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-4">
+            Zero-cost hotel operations system: room assignment, linen tracking, lost &amp; found photo reports, DND status, and daily summaries. Live sync via Supabase WebSocket. Bilingual (Chinese/English). Deployed to actual staff on budget hardware in Taiwan.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="badge bg-yellow-50 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-300 border-yellow-100 dark:border-yellow-500/20"><i class="fa-brands fa-js text-[10px]"></i> Vanilla JS</span>
+            <span class="badge bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-100 dark:border-emerald-500/20">Supabase</span>
+            <span class="badge bg-purple-50 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-100 dark:border-purple-500/20">PWA</span>
+          </div>
+          <a href="https://github.com/dimasfahrza/Housekeeping-App" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold rounded-xl hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 mt-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- HSK Vocabulary -->
+      <div class="reveal d2 card card-c rounded-2xl flex flex-col overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-sky-500 to-cyan-600 flex-shrink-0"></div>
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between mb-3">
+            <span class="sbadge sb-edtech">EdTech</span>
+            <i class="fa-solid fa-language text-cyan-400/40 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-base mb-2 text-gray-900 dark:text-white">HSK Vocabulary App</h3>
+          <p class="text-cyan-600 dark:text-cyan-400/80 text-xs font-semibold mb-2">"1,050-word Chinese trainer — Web Speech API recognition, real-time stroke-order validation, zero backend."</p>
+          <p class="text-gray-500 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-4">
+            Covers all HSK 1–3 vocabulary. Speed Quiz uses Web Speech API for voice-based answers with Pinyin tolerance. Stroke Writer validates hanzi stroke direction and order in real time via Hanzi Writer. 3-lives system, TTS, 15-second time attack.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="badge bg-yellow-50 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-300 border-yellow-100 dark:border-yellow-500/20"><i class="fa-brands fa-js text-[10px]"></i> Vanilla JS</span>
+            <span class="badge bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-100 dark:border-sky-500/20"><i class="fa-solid fa-microphone text-[10px]"></i> Web Speech API</span>
+            <span class="badge bg-teal-50 dark:bg-teal-500/10 text-teal-700 dark:text-teal-300 border-teal-100 dark:border-teal-500/20">Hanzi Writer</span>
+          </div>
+          <a href="https://github.com/dimasfahrza/HSKVocabularyApp" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold rounded-xl hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 mt-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+    </div><!-- end project grid -->
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     STACK  — clean tag clusters, zero progress bars
+     Completely different structure from projects above
+═══════════════════════════════════════════════════ -->
+<section id="skills" class="s-mid py-24 sm:py-28 px-6">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Heading — tighter, less ceremonial -->
+    <div class="reveal mb-12">
+      <p class="text-[11px] font-bold tracking-[.22em] uppercase text-indigo-600 dark:text-indigo-400 mb-3">Stack</p>
+      <h2 class="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white">Tools I reach for.</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Languages -->
+      <div class="reveal">
+        <p class="text-[10px] font-bold tracking-[.18em] uppercase text-slate-500 mb-4">Languages</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="stag"><span class="stag-dot bg-blue-400"></span>Python</span>
+          <span class="stag"><span class="stag-dot bg-yellow-400"></span>JavaScript</span>
+          <span class="stag"><span class="stag-dot bg-indigo-400"></span>SQL</span>
+          <span class="stag"><span class="stag-dot bg-orange-400"></span>HTML / CSS</span>
+        </div>
+      </div>
+
+      <!-- Frameworks & Tools -->
+      <div class="reveal d1">
+        <p class="text-[10px] font-bold tracking-[.18em] uppercase text-slate-500 mb-4">Frameworks &amp; Platforms</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="stag"><span class="stag-dot bg-cyan-400"></span>React</span>
+          <span class="stag"><span class="stag-dot bg-green-400"></span>FastAPI</span>
+          <span class="stag"><span class="stag-dot bg-violet-400"></span>Flask</span>
+          <span class="stag"><span class="stag-dot bg-orange-400"></span>Firebase</span>
+          <span class="stag"><span class="stag-dot bg-emerald-400"></span>Supabase</span>
+          <span class="stag"><span class="stag-dot bg-sky-400"></span>Docker</span>
+          <span class="stag"><span class="stag-dot bg-gray-400"></span>Git</span>
+        </div>
+      </div>
+
+      <!-- ML / Data -->
+      <div class="reveal d2">
+        <p class="text-[10px] font-bold tracking-[.18em] uppercase text-slate-500 mb-4">AI Engineering</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="stag"><span class="stag-dot bg-orange-400"></span>TensorFlow</span>
+          <span class="stag"><span class="stag-dot bg-red-400"></span>PyTorch</span>
+          <span class="stag"><span class="stag-dot bg-blue-400"></span>Scikit-learn</span>
+          <span class="stag"><span class="stag-dot bg-teal-400"></span>Pandas</span>
+          <span class="stag"><span class="stag-dot bg-slate-400"></span>NumPy</span>
+          <span class="stag"><span class="stag-dot bg-yellow-400"></span>Jupyter</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Currently exploring — not a separate section, just a footnote -->
+    <div class="reveal mt-10 pt-8 border-t border-white/[0.05] dark:border-white/[0.05] border-gray-100">
+      <p class="text-[10px] font-bold tracking-[.18em] uppercase text-slate-500 mb-3">Also exploring</p>
+      <div class="flex flex-wrap gap-2">
+        <span class="stag text-slate-500 dark:text-slate-600 border-dashed" style="opacity:.7">LangChain</span>
+        <span class="stag text-slate-500 dark:text-slate-600 border-dashed" style="opacity:.7">RAG pipelines</span>
+        <span class="stag text-slate-500 dark:text-slate-600 border-dashed" style="opacity:.7">Web3.py</span>
+        <span class="stag text-slate-500 dark:text-slate-600 border-dashed" style="opacity:.7">DeFi protocols</span>
+        <span class="stag text-slate-500 dark:text-slate-600 border-dashed" style="opacity:.7">Rust</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     CONTACT  — bold personal statement, not a form
+═══════════════════════════════════════════════════ -->
+<section id="contact" class="s-dark hero-bg relative overflow-hidden py-24 sm:py-32 px-6">
+  <div class="line-grid absolute inset-0 no-sel pointer-events-none opacity-50"></div>
+  <div class="orb w-[500px] h-[500px] bg-violet-700  opacity-[0.12] -bottom-28 -left-28"></div>
+  <div class="orb w-[300px] h-[300px] bg-indigo-600  opacity-[0.10] -top-16    right-1/4"  style="animation-delay:6s"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto">
+
+    <!-- Left-aligned, NOT centered — breaks template feel -->
+    <div class="reveal mb-12 max-w-2xl">
+      <p class="text-[11px] font-bold tracking-[.22em] uppercase text-indigo-600 dark:text-indigo-400 mb-5">Let's work together</p>
+
+      <!-- Big statement — personal, specific -->
+      <h2 class="font-black text-gray-900 dark:text-white leading-[1.05] mb-6"
+          style="font-size: clamp(2rem, 5vw, 3.5rem)">
+        Let's build something<br>that <span class="g-text">actually ships.</span>
+      </h2>
+
+      <!-- Authentic personal copy — references real direction -->
+      <p class="text-gray-600 dark:text-slate-400 leading-[1.8]" style="font-size:.95rem; max-width:44ch">
+        Whether it's an AI system that decides and acts at machine speed,
+        a Web3 infrastructure layer, or a PWA running on budget hardware in Taiwan —
+        I'm most useful when the stakes are real and the solution has to ship.
+      </p>
+    </div>
+
+    <!-- Email CTA + social — horizontal, not stacked -->
+    <div class="reveal d1 flex flex-col sm:flex-row sm:items-center gap-6 mb-16">
+      <a href="mailto:dimas.afahreza@gmail.com"
+         class="group inline-flex items-center gap-3 px-7 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl shadow-xl shadow-indigo-600/25 hover:shadow-indigo-500/40 hover:scale-[1.03] active:scale-[0.97] transition-all duration-200 self-start">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="group-hover:rotate-6 transition-transform duration-200 flex-shrink-0"><path d="M19.5 22.5a3 3 0 003-3v-8.174l-6.879 4.022 3.485 1.876a.75.75 0 01-.712 1.321l-5.683-3.06a1.5 1.5 0 00-1.422 0l-5.683 3.06a.75.75 0 01-.712-1.32l3.485-1.877L1.5 11.326V19.5a3 3 0 003 3h15z"/><path d="M1.5 9.589v-.745a3 3 0 011.578-2.641l7.5-4.039a3 3 0 012.844 0l7.5 4.039A3 3 0 0122.5 8.844v.745l-8.426 4.926a.75.75 0 01-.748 0L1.5 9.589z"/></svg>
+        dimas.afahreza@gmail.com
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="group-hover:translate-x-1 transition-transform duration-200"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- Social icons — compact row here, not the big labeled cards -->
+      <div class="flex items-center gap-2.5">
+        <a href="https://github.com/dimasfahrza" target="_blank" rel="noopener"
+           aria-label="GitHub" data-tip="GitHub" class="si si-gh w-11 h-11 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/dimasahmadfahreza" target="_blank" rel="noopener"
+           aria-label="LinkedIn" data-tip="LinkedIn" class="si si-li w-11 h-11 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="mailto:dimas.afahreza@gmail.com"
+           aria-label="Email" data-tip="Email" class="si si-em w-11 h-11 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/></svg>
+        </a>
+        <a href="https://instagram.com/dimasfahrza" target="_blank" rel="noopener"
+           aria-label="Instagram" data-tip="Instagram" class="si si-ig w-11 h-11 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+      </div>
+    </div><!-- end CTA row -->
+
+    <!-- Footer — minimal, not a separate section -->
+    <div class="reveal d2 s-divider mb-6"></div>
+    <div class="reveal d3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <p class="text-gray-500 dark:text-slate-500 text-sm">
+        Built by <span class="text-gray-700 dark:text-slate-300 font-semibold">Dimas Ahmad Fahreza</span>
+      </p>
+      <p class="text-gray-400 dark:text-slate-600 text-xs">© 2025 · HTML · Tailwind · Vanilla JS · Deploys on Vercel</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════ -->
+<script>
+  /* ── Dark mode ────────────────────────────────── */
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  });
+
+  /* ── Hamburger ───────────────────────────────── */
+  const hbBtn   = document.getElementById('hbBtn');
+  const mobMenu = document.getElementById('mobMenu');
+  let menuOpen  = false;
+
+  function toggleMenu(force) {
+    menuOpen = force !== undefined ? force : !menuOpen;
+    hbBtn.classList.toggle('open', menuOpen);
+    mobMenu.classList.toggle('hidden', !menuOpen);
+    mobMenu.style.maxHeight = menuOpen ? mobMenu.scrollHeight + 'px' : '0';
+  }
+  hbBtn.addEventListener('click', () => toggleMenu());
+  document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => toggleMenu(false)));
+
+  /* ── Scroll reveal ───────────────────────────── */
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('up'); });
+  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  /* Hero: reveal on load without waiting for scroll */
+  window.addEventListener('load', () => {
+    document.querySelectorAll('#hero .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('up'), i * 140 + 80);
+    });
+  });
+
+  /* ── Active nav section highlight ───────────── */
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id]');
+
+  const navObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => navObs.observe(s));
+
+  /* ── Smooth scroll ───────────────────────────── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const el = document.querySelector(a.getAttribute('href'));
+      if (!el) return;
+      e.preventDefault();
+      window.scrollTo({ top: el.offsetTop - 85, behavior: 'smooth' });
+    });
+  });
+
+  /* ── Navbar shrink on scroll ─────────────────── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.paddingTop = window.scrollY > 30 ? '6px' : '12px';
+  }, { passive: true });
+</script>
+</body>
+</html>

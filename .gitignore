@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Project subfolders — each has its own GitHub repo
+HSKVocabularyApp/
+Housekeeping-App/
+SMC-Bot-Telegram/
+SMC-Dashboard/
+
+# Original image with spaces in filename
+Gemini_Generated_Image_*
